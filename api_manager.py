@@ -10,7 +10,10 @@ class API_Manager:
 	def get_exercise_data():
 
 		api_url = "https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises"
-		headers = {'Authorization': f'Bearer {API_KEY}'}
+		headers = {
+			 	"X-RapidAPI-Key": API_KEY,
+			 	"X-RapidAPI-Host": "exercises-by-api-ninjas.p.rapidapi.com"
+			 }
 
 		target_muscle = input("Enter the target muscle group: ")
 		difficulty_level = input("Enter the difficulty level: ")
