@@ -5,6 +5,7 @@ from api_manager import API_Manager
 
 data = API_Manager.filtered_exercises
 
+
 def select_muscle_group(event):
     """return all available muscle groups in dropdown menu"""
 
@@ -16,9 +17,6 @@ def select_difficulty(event):
 def get_exercises():
     """return all exercises matching the criteria and
     the instructions for all of them"""
-
-
-
 
 
 window = tk.Tk()
@@ -37,5 +35,3 @@ get_instructions.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
 
 
 window.mainloop()
-
-
