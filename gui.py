@@ -22,6 +22,7 @@ muscles = [
 ]
 
 difficulty = [
+    "-",
     "beginner",
     "intermediate",
     "expert",
@@ -31,7 +32,7 @@ def get_exercises():
     """return all exercises matching the criteria and
     the instructions for all of them"""
     try:
-        API_Manager.return_html(target_muscle.get(), difficulty_level.get())
+        API_Manager.return_html(target_muscle.get(), difficulty_level.get() if difficulty_level.get() != "-" else None)
         messagebox.showinfo(title="Result", message="Done!")
 
     except:

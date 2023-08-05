@@ -7,42 +7,26 @@ with open("config.json") as conf:
 
 class API_Manager:
     @staticmethod
-    def get_exercise_data(target_muscle, difficulty_level):
+    def get_exercise_data(target_muscle, difficulty_level=None):
         api_url = "https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises"
         headers = {
             "X-RapidAPI-Key": API_KEY,
             "X-RapidAPI-Host": "exercises-by-api-ninjas.p.rapidapi.com",
         }
-
-        params = {"muscle": target_muscle, "difficulty": difficulty_level}
+        if difficulty_level:
+            params = {"muscle": target_muscle, "difficulty": difficulty_level}
+        else:
+            params = {"muscle": target_muscle}
         try:
             response = requests.get(api_url, headers=headers, params=params)
             response.raise_for_status()
             exercises_data = response.json()
         except requests.exceptions.RequestException as e:
             print(f"Failed to fetch data from the API. Error: {e}")
-            exit()
-
-        filtered_exercises = []
-        for exercise in exercises_data:
-            if (
-                exercise.get("muscle", "").lower() == target_muscle.lower()
-                and exercise.get("difficulty", "").lower() == difficulty_level.lower()
-            ):
-                filtered_exercises.append(exercise)
-
-        if filtered_exercises:
-            print("Exercises for you: ")
-            for exercise in filtered_exercises:
-                print(f"Exercise: {exercise['name']}")
-                print(f"Muscle group: {exercise['muscle']}")
-                print(f"Difficulty: {exercise['difficulty']}")
-                print(f"Instructions: {exercise['instructions']}")
-                print("-" * 40)
-        else:
-            print("We don't have such an exercise.Sorry!")
+            return
 
         return exercises_data if exercises_data else None
+
     @staticmethod
     def get_image(query):
         url = f"https://unsplash.com/napi/search/photos?per_page=20&page=1&query={query}"
@@ -55,7 +39,6 @@ class API_Manager:
         response = requests.request("GET", url, headers=headers, data=payload).json()
         image_url = response['results'][0]['urls']['raw']
         return image_url
-
 
     @staticmethod
     def return_html(target_muscle, difficulty_level):
